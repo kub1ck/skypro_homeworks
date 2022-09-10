@@ -1,9 +1,15 @@
 from random import choice
 
+# letters_total_dict = {
+#     "а": 8, "б": 2, "в": 4, "г": 2, "д": 4, "е": 8, "ё": 1, "ж": 1, "з": 2, "и": 5, "й": 1, "к": 4,
+#     "л": 4, "м": 3, "н": 5, "о": 10, "п": 4, "р": 5, "с": 5, "т": 5, "у": 4, "ф": 1, "х": 1, "ц": 1,
+#     "ч": 1, "ш": 1, "щ": 1, "ъ": 1, "ы": 2, "ь": 2, "э": 1, "ю": 1, "я": 2
+# }
+
+
 letters_total_dict = {
-    "а": 8, "б": 2, "в": 4, "г": 2, "д": 4, "е": 8, "ё": 1, "ж": 1, "з": 2, "и": 5, "й": 1, "к": 4,
-    "л": 4, "м": 3, "н": 5, "о": 10, "п": 4, "р": 5, "с": 5, "т": 5, "у": 4, "ф": 1, "х": 1, "ц": 1,
-    "ч": 1, "ш": 1, "щ": 1, "ъ": 1, "ы": 2, "ь": 2, "э": 1, "ю": 1, "я": 2
+    'а': 7,
+    'б': 8
 }
 
 
@@ -39,17 +45,21 @@ def remove_letters(user_letters: list, used_letters: list) -> None:
         user_letters.remove(letter)
 
 
-def check_word(user_word: str) -> bool:
+def check_word(user_word: str, words: list) -> bool:
     """
     Проверяем, имеется ли введенное слово в файле
     """
 
+    return user_word in words
+
+
+def get_words() -> list:
+    """
+    Возвращаем список возможных слов
+    """
+
     with open('russian_word.txt', encoding='utf-8') as file:
-        for word in file:
-            if user_word == word.rstrip():
-                return True
-        else:
-            return False
+        return file.read().split()
 
 
 def check_letters(user_word: str, user_letters: list) -> bool:
@@ -129,6 +139,7 @@ def main():
 
     turn_order = 0  # Очередь
     used_words = []
+    words = get_words()
 
     # Основной цикл игры
     while True:
@@ -144,9 +155,9 @@ def main():
         if check_letters(user_word, users_letters[turn_order]):
 
             # Проверяем, есть ли введенное слово в искомом файле и не вводили ли его ранее
-            if check_word(user_word) and user_word not in used_words:
+            if check_word(user_word, words):
                 print("\nТакое слово есть.")
-                used_words.append(user_word)
+                words.remove(user_word)
 
                 # Получение и начисление очков
                 score = get_score(len(user_word))
@@ -168,12 +179,13 @@ def main():
             users_letters[turn_order].extend(new_letters)
             print(f"Добавляю буквы: {new_letters}")
 
+            # Если у кого-то заканчиваются буквы, а также словарь пусть, то конец игры
+            if not users_letters[turn_order]:
+                break
+
         else:
             print("\nСлово нужно составлять только из тех букв, которые есть в Вашем списке!")
             continue
-
-        if not letters_total_dict:
-            break
 
         turn_order = 1 if not turn_order else 0  # Смена очереди
 
