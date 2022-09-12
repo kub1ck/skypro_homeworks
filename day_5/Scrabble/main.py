@@ -170,8 +170,9 @@ def main():
 
             # Добавление букв
             new_letters = add_user_letters(total_letters)
-            users_letters[turn_order].extend(new_letters)
-            print(f"Добавляю буквы: {new_letters}")
+            if new_letters:
+                users_letters[turn_order].extend(new_letters)
+                print(f"Добавляю буквы: {new_letters}")
 
             # Если у кого-то заканчиваются буквы, а также словарь пусть, то конец игры
             if not users_letters[turn_order]:
