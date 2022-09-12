@@ -132,7 +132,6 @@ def main():
     }
 
     turn_order = 0  # Очередь
-    used_words = []
     words = get_words()
 
     # Основной цикл игры
