@@ -44,7 +44,14 @@ def check_word(user_word: str, words: list) -> bool:
     Проверяем, имеется ли введенное слово в файле
     """
 
-    return user_word in words
+    flag = False
+
+    if user_word in words[:int(len(words) // 2)] or user_word == words[len(words) - 1]:
+        return True
+    elif len(words) != 1:
+        flag = check_word(user_word, words[len(words) // 2:])
+
+    return flag
 
 
 def get_words() -> list:
