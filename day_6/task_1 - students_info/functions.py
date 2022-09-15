@@ -19,49 +19,20 @@ def load_professions() -> list:
         return json.load(professions)
 
 
-def get_students_dict() -> dict:
+def get_student_by_pk(pk: int, student: list) -> dict:
     """
-    Переупаковываем словарь о студентах для удобной работы с ним
-    """
-
-    students = {}
-
-    for student in load_students():
-        students[student['pk']] = {
-            'name': student['full_name'],
-            'skills': student['skills']
-        }
-
-    return students
-
-
-def get_professions_dict() -> dict:
-    """
-    Переупаковываем словарь о стеке технологий для удобной работы с ним
+    Получаем информацию о студенте по его номеру.
     """
 
-    professions = {}
-
-    for profession in load_professions():
-        professions[profession['title']] = profession['skills']
-
-    return professions
+    return student[pk-1]
 
 
-def get_student_by_pk(pk: int) -> dict:
+def get_profession_by_title(title: str, titles: dict, profession: list) -> dict:
     """
-    Выводим информацию о студенте по его номеру.
+    Получаем стек-технологий из списка по его названию.
     """
 
-    return get_students_dict()[pk]
-
-
-def get_profession_by_title(title: str) -> list:
-    """
-    Выводим стек-технологий из списка по его названию.
-    """
-
-    return get_professions_dict()[title]
+    return profession[titles[title]-1]
 
 
 
