@@ -16,6 +16,7 @@ class Int(int):
                 value = values[other]
                 return super().__add__(value)
             else:
-                return 'TypeError: справа от знака "+" непонятный текст. Если что, я понимаю текстом цифры с 1 до 5.'
+                raise TypeError('TypeError: справа от знака "+" непонятный текст. ',
+                                'Если что, я понимаю текстом цифры с 1 до 5.')
 
-        return f"TypeError: unsupported operand type(s) for +: 'Int' and {str(type(other)).split()[1][:-1]}"
+        return super().__add__(other)

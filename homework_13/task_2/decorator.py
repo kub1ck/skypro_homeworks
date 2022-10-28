@@ -16,9 +16,10 @@ def decorator(function):
                 value = values[other]
                 return function(self, value)
             else:
-                return 'TypeError: справа от знака "+" непонятный текст. Если что, я понимаю текстом цифры с 1 до 5.'
+                raise TypeError('TypeError: справа от знака "+" непонятный текст. ',
+                                'Если что, я понимаю текстом цифры с 1 до 5.')
 
-        return f"TypeError: unsupported operand type(s) for +: 'Int' and {str(type(other)).split()[1][:-1]}"
+        return function(self, other)
 
     return inner
 
